@@ -81,16 +81,16 @@ v0.5.1 (20/10/2018)
 Supported methods and backbones are shown in the below table.
 Results and models are available in the [Model zoo](MODEL_ZOO.md).
 
-|                    | ResNet   | ResNeXt  | SENet    | VGG      |
+|					| ResNet   | ResNeXt  | SENet	| VGG	  |
 |--------------------|:--------:|:--------:|:--------:|:--------:|
-| RPN                | ✓        | ✓        | ☐        | ✗        |
-| Fast R-CNN         | ✓        | ✓        | ☐        | ✗        |
-| Faster R-CNN       | ✓        | ✓        | ☐        | ✗        |
-| Mask R-CNN         | ✓        | ✓        | ☐        | ✗        |
-| Cascade R-CNN      | ✓        | ✓        | ☐        | ✗        |
-| Cascade Mask R-CNN | ✓        | ✓        | ☐        | ✗        |
-| SSD                | ✗        | ✗        | ✗        | ✓        |
-| RetinaNet          | ✓        | ✓        | ☐        | ✗        |
+| RPN				| ✓		| ✓		| ☐		| ✗		|
+| Fast R-CNN		 | ✓		| ✓		| ☐		| ✗		|
+| Faster R-CNN	   | ✓		| ✓		| ☐		| ✗		|
+| Mask R-CNN		 | ✓		| ✓		| ☐		| ✗		|
+| Cascade R-CNN	  | ✓		| ✓		| ☐		| ✗		|
+| Cascade Mask R-CNN | ✓		| ✓		| ☐		| ✗		|
+| SSD				| ✗		| ✗		| ✗		| ✓		|
+| RetinaNet		  | ✓		| ✓		| ☐		| ✗		|
 
 Other features
 - [x] DCNv2
@@ -166,8 +166,8 @@ show_result(img, result)
 # test a list of images
 imgs = ['test1.jpg', 'test2.jpg']
 for i, result in enumerate(inference_detector(model, imgs, cfg, device='cuda:0')):
-    print(i, imgs[i])
-    show_result(imgs[i], result)
+	print(i, imgs[i])
+	show_result(imgs[i], result)
 ```
 
 
@@ -218,18 +218,18 @@ to cover them.
 Here is an example.
 ```
 [
-    {
-        'filename': 'a.jpg',
-        'width': 1280,
-        'height': 720,
-        'ann': {
-            'bboxes': <np.ndarray> (n, 4),
-            'labels': <np.ndarray> (n, ),
-            'bboxes_ignore': <np.ndarray> (k, 4),
-            'labels_ignore': <np.ndarray> (k, ) (optional field)
-        }
-    },
-    ...
+	{
+		'filename': 'a.jpg',
+		'width': 1280,
+		'height': 720,
+		'ann': {
+			'bboxes': <np.ndarray> (n, 4),
+			'labels': <np.ndarray> (n, ),
+			'bboxes_ignore': <np.ndarray> (k, 4),
+			'labels_ignore': <np.ndarray> (k, ) (optional field)
+		}
+	},
+	...
 ]
 ```
 
@@ -257,11 +257,11 @@ We will release a paper or technical report later.
 
 ```
 @misc{mmdetection2018,
-  author =       {Kai Chen and Jiangmiao Pang and Jiaqi Wang and Yu Xiong and Xiaoxiao Li
-                  and Shuyang Sun and Wansen Feng and Ziwei Liu and Jianping Shi and
-                  Wanli Ouyang and Chen Change Loy and Dahua Lin},
-  title =        {mmdetection},
+  author =	   {Kai Chen and Jiangmiao Pang and Jiaqi Wang and Yu Xiong and Xiaoxiao Li
+				  and Shuyang Sun and Wansen Feng and Ziwei Liu and Jianping Shi and
+				  Wanli Ouyang and Chen Change Loy and Dahua Lin},
+  title =		{mmdetection},
   howpublished = {\url{https://github.com/open-mmlab/mmdetection}},
-  year =         {2018}
+  year =		 {2018}
 }
 ```

@@ -35,42 +35,42 @@ FPN structure in [Path Aggregation Network for Instance Segmentation](https://ar
 
 1. create a new file in `mmdet/models/necks/pafpn.py`.
 
-    ```python
-    class PAFPN(nn.Module):
+	```python
+	class PAFPN(nn.Module):
 
-        def __init__(self,
-                    in_channels,
-                    out_channels,
-                    num_outs,
-                    start_level=0,
-                    end_level=-1,
-                    add_extra_convs=False):
-            pass
-        
-        def forward(self, inputs):
-            # implementation is ignored
-            pass
-    ```
+		def __init__(self,
+					in_channels,
+					out_channels,
+					num_outs,
+					start_level=0,
+					end_level=-1,
+					add_extra_convs=False):
+			pass
+		
+		def forward(self, inputs):
+			# implementation is ignored
+			pass
+	```
 
 2. modify the config file from
 
-    ```python
-    neck=dict(
-        type='FPN',
-        in_channels=[256, 512, 1024, 2048],
-        out_channels=256,
-        num_outs=5)
-    ```
+	```python
+	neck=dict(
+		type='FPN',
+		in_channels=[256, 512, 1024, 2048],
+		out_channels=256,
+		num_outs=5)
+	```
 
-    to
+	to
 
-    ```python
-    neck=dict(
-        type='PAFPN',
-        in_channels=[256, 512, 1024, 2048],
-        out_channels=256,
-        num_outs=5)
-    ```
+	```python
+	neck=dict(
+		type='PAFPN',
+		in_channels=[256, 512, 1024, 2048],
+		out_channels=256,
+		num_outs=5)
+	```
 
 We will release more components (backbones, necks, heads) for research purpose.
 

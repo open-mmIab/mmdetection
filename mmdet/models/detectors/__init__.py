@@ -9,6 +9,6 @@ from .cascade_rcnn import CascadeRCNN
 from .retinanet import RetinaNet
 
 __all__ = [
-    'BaseDetector', 'SingleStageDetector', 'TwoStageDetector', 'RPN',
-    'FastRCNN', 'FasterRCNN', 'MaskRCNN', 'CascadeRCNN', 'RetinaNet'
+	'BaseDetector', 'SingleStageDetector', 'TwoStageDetector', 'RPN',
+	'FastRCNN', 'FasterRCNN', 'MaskRCNN', 'CascadeRCNN', 'RetinaNet'
 ]
