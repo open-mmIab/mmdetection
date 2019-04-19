@@ -7,21 +7,21 @@ from Cython.Distutils import build_ext
 from torch.utils.cpp_extension import BuildExtension, CUDAExtension
 
 ext_args = dict(
-	include_dirs=[np.get_include()],
-	language='c++',
-	extra_compile_args={
-		'cc': ['-Wno-unused-function', '-Wno-write-strings'],
-		'nvcc': ['-c', '--compiler-options', '-fPIC'],
-	},
+    include_dirs=[np.get_include()],
+    language="c++",
+    extra_compile_args={
+        "cc": ["-Wno-unused-function", "-Wno-write-strings"],
+        "nvcc": ["-c", "--compiler-options", "-fPIC"],
+    },
 )
 
 extensions = [
-	Extension('soft_nms_cpu', ['src/soft_nms_cpu.pyx'], **ext_args),
+    Extension("soft_nms_cpu", ["src/soft_nms_cpu.pyx"], **ext_args)
 ]
 
 
 def customize_compiler_for_nvcc(self):
-	"""inject deep into distutils to customize how the dispatch
+    """inject deep into distutils to customize how the dispatch
 	to cc/nvcc works.
 	If you subclass UnixCCompiler, it's not trivial to get your subclass
 	injected in, and still have the right customizations (i.e.
@@ -29,56 +29,53 @@ def customize_compiler_for_nvcc(self):
 	the OO route, I have this. Note, it's kindof like a wierd functional
 	subclassing going on."""
 
-	# tell the compiler it can processes .cu
-	self.src_extensions.append('.cu')
+    # tell the compiler it can processes .cu
+    self.src_extensions.append(".cu")
 
-	# save references to the default compiler_so and _comple methods
-	default_compiler_so = self.compiler_so
-	super = self._compile
+    # save references to the default compiler_so and _comple methods
+    default_compiler_so = self.compiler_so
+    super = self._compile
 
-	# now redefine the _compile method. This gets executed for each
-	# object but distutils doesn't have the ability to change compilers
-	# based on source extension: we add it.
-	def _compile(obj, src, ext, cc_args, extra_postargs, pp_opts):
-		if osp.splitext(src)[1] == '.cu':
-			# use the cuda for .cu files
-			self.set_executable('compiler_so', 'nvcc')
-			# use only a subset of the extra_postargs, which are 1-1 translated
-			# from the extra_compile_args in the Extension class
-			postargs = extra_postargs['nvcc']
-		else:
-			postargs = extra_postargs['cc']
+    # now redefine the _compile method. This gets executed for each
+    # object but distutils doesn't have the ability to change compilers
+    # based on source extension: we add it.
+    def _compile(obj, src, ext, cc_args, extra_postargs, pp_opts):
+        if osp.splitext(src)[1] == ".cu":
+            # use the cuda for .cu files
+            self.set_executable("compiler_so", "nvcc")
+            # use only a subset of the extra_postargs, which are 1-1 translated
+            # from the extra_compile_args in the Extension class
+            postargs = extra_postargs["nvcc"]
+        else:
+            postargs = extra_postargs["cc"]
 
-		super(obj, src, ext, cc_args, postargs, pp_opts)
-		# reset the default compiler_so, which we might have changed for cuda
-		self.compiler_so = default_compiler_so
+        super(obj, src, ext, cc_args, postargs, pp_opts)
+        # reset the default compiler_so, which we might have changed for cuda
+        self.compiler_so = default_compiler_so
 
-	# inject our redefined _compile method into the class
-	self._compile = _compile
+    # inject our redefined _compile method into the class
+    self._compile = _compile
 
 
 class custom_build_ext(build_ext):
-
-	def build_extensions(self):
-		customize_compiler_for_nvcc(self.compiler)
-		build_ext.build_extensions(self)
+    def build_extensions(self):
+        customize_compiler_for_nvcc(self.compiler)
+        build_ext.build_extensions(self)
 
 
 setup(
-	name='soft_nms',
-	cmdclass={'build_ext': custom_build_ext},
-	ext_modules=cythonize(extensions),
+    name="soft_nms",
+    cmdclass={"build_ext": custom_build_ext},
+    ext_modules=cythonize(extensions),
 )
 
 setup(
-	name='nms_cuda',
-	ext_modules=[
-		CUDAExtension('nms_cuda', [
-			'src/nms_cuda.cpp',
-			'src/nms_kernel.cu',
-		]),
-		CUDAExtension('nms_cpu', [
-			'src/nms_cpu.cpp',
-		]),
-	],
-	cmdclass={'build_ext': BuildExtension})
+    name="nms_cuda",
+    ext_modules=[
+        CUDAExtension(
+            "nms_cuda", ["src/nms_cuda.cpp", "src/nms_kernel.cu"]
+        ),
+        CUDAExtension("nms_cpu", ["src/nms_cpu.cpp"]),
+    ],
+    cmdclass={"build_ext": BuildExtension},
+)
